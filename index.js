@@ -5,6 +5,7 @@ var child_process = require('child_process');
 var puid = new (require('puid'));
 var fs = require('fs');
 var os = require('os');
+var util = require('util');
 
 var app = express();
 app.get('/', function(req, res) {
@@ -21,5 +22,7 @@ app.get('/', function(req, res) {
   });
 });
 
-app.listen(65200);
-console.log('Server running at http://localhost:3000/');
+var args = process.argv;
+var port = args[2];
+app.listen(port);
+console.log(util.format('Server running at http://localhost:%d/', port));

@@ -4,7 +4,7 @@
   "description": "Capturing image via API",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node index.js 65200",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tei1988",
