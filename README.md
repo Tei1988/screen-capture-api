@@ -3,6 +3,7 @@ screen-capture-api is an API server for capturing web page as an image.
 
 ## How to run
 ```
+npm install
 npm start
 ```
 
