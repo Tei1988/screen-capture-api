@@ -19,3 +19,16 @@ npm start
 
 **Response**  
 The response is returned as png image.
+
+### GET /:size/
+|name|include?|example|
+|---|---|---|
+|size|Must|[0-9]+,[0-9]+|
+|url|Must|https://github.com/Tei1988/screen-capture-api|
+
+#### sample
+**Request**  
+`/?url=https://github.com/Tei1988/screen-capture-api`
+
+**Response**  
+The response is returned as png image.

@@ -1,23 +1,37 @@
 var express = require('express');
-var phantomjs = require('phantomjs');
 var path = require('path');
-var child_process = require('child_process');
 var puid = new (require('puid'));
+var child_process = require('child_process');
 var fs = require('fs');
 var os = require('os');
 var util = require('util');
 
 var app = express();
-app.get('/', function(req, res) {
+app.get(/\/(:?[0-9]+,[0-9]+\/)?/, function(req, res) {
+  var url = req.query.url;
+  if (url === undefined) {
+    res.end();
+    return;
+  }
   res.type('png');
 
-  var url = req.query.url;
-  var filename = path.join(os.tmpdir(), puid.generate() + '.png');
+  var size = req.path.replace(/\//g, '') || '1280,1024'
+  console.log(url, size);
 
-  var args = [path.join(__dirname, 'phantomjs/capture.js'), url, filename];
-  child_process.execFile(phantomjs.path, args, function() {
+  var filename = path.resolve(path.join(__dirname, puid.generate() + '.png'));
+  //var filename = path.resolve([__dirname, 'screenshot.png'].join('/'));
+
+  var args = [
+    '--headless',
+    '--disable-gpu',
+    '--incognito',
+    '--window-size=' + size,
+    '--screenshot=' + filename,
+    url
+  ];
+  child_process.execFile('chromium-browser', args, function() {
     res.sendFile(filename, function() {
-      fs.unlink(filename);
+      fs.unlinkSync(filename);
     });
   });
 });
